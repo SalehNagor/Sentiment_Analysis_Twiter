@@ -1,0 +1,49 @@
+name: Sentiment Analysis CI/CD Pipeline
+
+# يحدد متى يعمل هذا السكربت: عند عمل push على فرع main
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest  # البيئة التي سيعمل عليها السيرفر (Linux)
+
+    steps:
+    # 1. سحب الكود من المستودع
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # 2. تجهيز بيئة بايثون
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
+
+    # 3. تثبيت المكتبات المطلوبة
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # 4. تشغيل اختبارات الوحدة (Unit Tests)
+    # هذه الخطوة تطابق النقطة "Run Tests" في الملف المرفق
+    - name: Run Unit Tests with Pytest
+      run: |
+        pytest tests/
+
+    # 5. محاكاة التدريب (Training Simulation)
+    # ملاحظة: التدريب الكامل قد يستغرق وقتاً طويلاً على GitHub Actions المجاني
+    # هنا نتأكد فقط أن ملف التدريب قابل للتشغيل بدون أخطاء برمجية
+    - name: Verify Training Script Integrity
+      run: |
+        python -c "from src.train import train_model; print('Training module imported successfully')"
+
+    # 6. محاكاة النشر (Deployment Simulation)
+    # هذه الخطوة تطابق النقطة "Deploy Model" في الملف المرفق
+    - name: Deploy Model (Simulation)
+      run: |
+        echo "Starting deployment process..."
+        echo "Model deployed to Production Environment successfully!"
