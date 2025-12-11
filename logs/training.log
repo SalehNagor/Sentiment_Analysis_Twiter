@@ -1,0 +1,5 @@
+2025-12-12 01:32:56,950 - INFO - root - Logging configured. Writing to logs\training.log
+2025-12-12 01:32:56,950 - INFO - __main__ - Pipeline started.
+2025-12-12 01:32:56,950 - INFO - __main__ - Loading and splitting data from data/twitter_training.csv
+2025-12-12 01:32:58,560 - INFO - __main__ - Tokenizing datasets.
+2025-12-12 01:33:02,311 - INFO - __main__ - Starting model training.
