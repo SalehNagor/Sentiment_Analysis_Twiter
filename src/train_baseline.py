@@ -4,23 +4,36 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report
-from src.preprocessing import load_and_split_data
+from src.preprocessing import clean_text
 
 
 
 
 def train_baseline(File_path):
-    model = make_pipeline(
-    TfidfVectorizer(ngram_range=(1, 2)), 
-    LogisticRegression(solver='liblinear', multi_class='auto')
-    )
 
-    train_df, val_df, test_df = load_and_split_data(File_path)
-    
-    X_train = train_df['text']
-    y_train = train_df['sentiment']
-    X_test = test_df['text']
-    y_test = test_df['sentiment']
+    print("Loading and cleaning data...")
+    column_names = ['a', 'b', 'sentiment', 'text']
+    df = pd.read_csv(File_path,
+    header=None,
+    names=column_names)
+    df.dropna(inplace=True)
+    df.drop_duplicates(inplace=True)
+
+    df = df[df['sentiment'] != 'Irrelevant']
+
+    df['text'] = df['text'].apply(clean_text)
+    df['sentiment'] = df['sentiment'].replace({'Negative': 0, 'Neutral': 1, 'Positive': 2})
+
+    X = df['text']  # Input features (Text)
+    y = df['sentiment']  # Target variable (Sentiment)
+
+    # Split the data: 80% for training, 20% for testing
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    model = make_pipeline(
+    TfidfVectorizer(ngram_range=(1, 2)),
+    LogisticRegression(solver='liblinear', multi_class='auto')
+)
 
     print("Training the Baseline model...")
     model.fit(X_train, y_train)

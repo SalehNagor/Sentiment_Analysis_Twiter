@@ -1,5 +1,6 @@
 import numpy as np
 import os
+import torch
 from transformers import DistilBertForSequenceClassification, Trainer, TrainingArguments
 
 def compute_metrics(p):
@@ -9,6 +10,14 @@ def compute_metrics(p):
     return {'accuracy': accuracy}
 
 def train_model(tokenized_datasets, output_dir):
+
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    print(f"==================================================")
+    print(f"Status: Training will run on: {device.upper()}")
+    if device == "cuda":
+        print(f"GPU Name: {torch.cuda.get_device_name(0)}")
+    print(f"==================================================")
+
     print("Initializing model and training...")
     os.environ["WANDB_DISABLED"] = "true"
 

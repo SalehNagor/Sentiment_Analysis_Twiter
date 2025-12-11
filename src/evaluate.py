@@ -11,4 +11,4 @@ def evaluate_model(trainer, test_dataset):
     predicted_labels = np.argmax(predictions, axis=1)
 
     print("\n--- Classification Report ---")
-    print(classification_report(labels, predicted_labels, target_names=['Negative', 'Positive']))
+    print(classification_report(labels, predicted_labels, target_names=['Negative','Neutral', 'Positive']))
