@@ -39,7 +39,11 @@ jobs:
     # هنا نتأكد فقط أن ملف التدريب قابل للتشغيل بدون أخطاء برمجية
     - name: Verify Training Script Integrity
       run: |
-        python -c "from src.train import train_model; print('Training module imported successfully')"
+        python -c "from src.train import train_model_before_pruning; print('Training module imported successfully')"
+
+    - name: Verify Pruning Script Integrity
+      run: |
+        python -c "from src.train import prune_and_finetune; print('Training module imported successfully')"
 
     # 6. محاكاة النشر (Deployment Simulation)
     # هذه الخطوة تطابق النقطة "Deploy Model" في الملف المرفق
