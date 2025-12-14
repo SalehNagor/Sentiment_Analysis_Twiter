@@ -77,7 +77,7 @@ if st.button("Analyze Sentiment"):
                 st.info(f"**Sentiment:** {sentiment} (Confidence: {confidence:.2%})")
 
 st.write("Made by:")
-st.write("Saleh Nagor / Majed Alfahmi / Anas Almuwalled / Rayen Aluofi")
+st.write("Saleh Nagor / Majed Alfahmi / Anas Almuwalled / Rayan Aloufi")
 
 st.write("Supervised by:")
 st.write("Dr.Mohammed Arif")
